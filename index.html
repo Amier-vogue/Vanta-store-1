@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VANTA | Future Atelier</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#090a0d;--panel:#14151b;--text:#f5f5f5;--muted:#999ba8;--accent:#c8ff45}
+body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{height:76px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #26272d;position:sticky;top:0;background:#090a0df2;z-index:5}
+.logo{font-size:25px;font-weight:900;letter-spacing:6px}
+nav{display:flex;gap:25px}
+a{color:inherit;text-decoration:none}
+nav a{font-size:12px;color:#bbb}
+button{cursor:pointer;border:0;font-weight:bold}
+.cart{background:var(--accent);padding:12px 16px;border-radius:30px;color:#101010}
+.hero{min-height:570px;padding:70px 8%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:30px;overflow:hidden}
+.eyebrow{color:var(--accent);letter-spacing:4px;font-size:11px;font-weight:bold}
+h1{font-size:clamp(48px,7vw,88px);line-height:.98;letter-spacing:-5px;margin:22px 0}
+h1 span{color:var(--accent)}
+.intro{color:var(--muted);line-height:1.8;max-width:410px;font-size:14px}
+.primary{margin-top:27px;background:var(--accent);padding:15px 24px;border-radius:30px}
+.scene{height:390px;display:grid;place-items:center;perspective:900px;position:relative}
+.orbit{width:290px;height:290px;border:1px solid #484a51;border-radius:50%;position:absolute;transform:rotateX(68deg);animation:spin 12s linear infinite}
+.orbit:after{content:"";position:absolute;width:12px;height:12px;background:var(--accent);border-radius:50%;top:10px;left:48px;box-shadow:0 0 25px var(--accent)}
+@keyframes spin{to{transform:rotateX(68deg) rotateZ(360deg)}}
+.shoe{width:235px;height:115px;background:linear-gradient(145deg,#f1f1e9,#777b85 45%,#252832 80%);border-radius:65% 22% 28% 22%;transform:rotate(-25deg) rotateY(-20deg);box-shadow:20px 30px 50px #000, inset 0 -15px 0 #42444b;position:relative;animation:float 4s ease-in-out infinite}
+.shoe:before{content:"";position:absolute;width:155px;height:30px;top:25px;left:38px;border-top:5px solid #222;border-bottom:4px solid #aaa;transform:rotate(-9deg);border-radius:50%}
+.shoe:after{content:"V";position:absolute;color:#17191f;font-weight:900;font-size:38px;left:95px;top:32px;transform:rotate(15deg)}
+@keyframes float{50%{transform:translateY(-18px) rotate(-20deg) rotateY(-20deg)}}
+.scene-label{position:absolute;bottom:15px;color:#737681;letter-spacing:3px;font-size:10px}
+.section{padding:65px 8%}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:30px;gap:20px}
+h2{font-size:35px;letter-spacing:-1px}
+.muted{color:var(--muted);font-size:13px;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.product{background:var(--panel);border:1px solid #26272d;border-radius:15px;overflow:hidden;transition:.3s}
+.product:hover{transform:translateY(-7px);border-color:#656b49}
+.art{height:225px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse,#343640,#17181e 70%)}
+.art span{font-size:100px;filter:drop-shadow(12px 20px 12px #0008);transition:.4s}
+.product:hover .art span{transform:rotate(-12deg) scale(1.13)}
+.art.a2{background:radial-gradient(ellipse,#353c43,#17181e 70%)}
+.art.a3{background:radial-gradient(ellipse,#413b36,#17181e 70%)}
+.art.a4{background:radial-gradient(ellipse,#353b2b,#17181e 70%)}
+.details{padding:17px}
+.details h3{font-size:15px;margin-bottom:8px}
+.price{font-weight:bold;color:var(--accent);margin:12px 0}
+.small{background:#292a31;color:white;border:1px solid #41424a;border-radius:8px;padding:11px;width:100%}
+.small:hover{background:var(--accent);color:#111}
+.banner{margin:20px 8% 70px;background:var(--accent);color:#111;padding:35px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.banner h2{font-size:30px}
+.banner p{font-size:13px;margin-top:8px}
+footer{padding:30px 8%;border-top:1px solid #272830;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:15px}
+.modal-bg{position:fixed;inset:0;background:#000b;z-index:10;display:none;place-items:center;padding:20px}
+.modal{background:#17181e;border:1px solid #383941;border-radius:16px;padding:25px;width:min(420px,100%)}
+.modal h2{font-size:27px;margin:12px 0}
+.modal select,.modal input{background:#22232a;color:white;border:1px solid #454650;padding:12px;border-radius:8px;width:100%;margin:8px 0}
+.modal .primary{width:100%}
+.close{float:right;background:none;color:white;font-size:25px}
+.cart-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #393a42;padding:14px 0;font-size:13px}
+.cart-row button{background:none;color:var(--accent)}
+@media(max-width:760px){
+ header{padding:0 5%;height:65px}nav{gap:12px}nav a{font-size:10px}nav a:nth-child(2){display:none}
+ .logo{font-size:20px;letter-spacing:4px}.cart{padding:10px;font-size:11px}
+ .hero{grid-template-columns:1fr;padding:55px 7% 20px;gap:0}.scene{height:300px}.shoe{transform:scale(.85) rotate(-25deg)}
+ h1{letter-spacing:-3px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .art{height:170px}.art span{font-size:75px}.section{padding:45px 5%}
+ .section-head{align-items:start;flex-direction:column}h2{font-size:29px}
+ .banner{margin:10px 5% 45px;padding:25px;flex-direction:column;align-items:start}
+ footer{padding:25px 5%;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#">VANTA</a>
+  <nav>
+    <a href="#shop">SHOP</a>
+    <a href="#story">OUR WORLD</a>
+  </nav>
+  <button class="cart" onclick="openCart()">BAG (<span id="count">0</span>)</button>
+</header>
+
+<section class="hero" id="story">
+  <div>
+    <div class="eyebrow">FUTURE ATELIER — 2026</div>
+    <h1>BEYOND<br>THE <span>ORDINARY.</span></h1>
+    <p class="intro">A new dimension of streetwear. Explore futuristic silhouettes, considered details, and everyday pieces designed for what comes next.</p>
+    <button class="primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">EXPLORE COLLECTION ↗</button>
+  </div>
+  <div class="scene">
+    <div class="orbit"></div>
+    <div class="shoe"></div>
+    <div class="scene-label">OBJECT 001 — MOTION REDEFINED</div>
+  </div>
+</section>
+
+<section class="section" id="shop">
+  <div class="section-head">
+    <div><div class="eyebrow">CURATED FOR TOMORROW</div><h2>Featured objects.</h2></div>
+    <p class="muted">New forms. New perspectives.</p>
+  </div>
+  <div class="grid">
+    <article class="product">
+      <div class="art"><span>👟</span></div>
+      <div class="details"><h3>Orbit Runner</h3><p class="muted">Sculpted performance sneaker</p><div class="price">$129</div><button class="small" onclick="showProduct(0)">VIEW OBJECT ↗</button></div>
+    </article>
+    <article class="product">
+      <div class="art a2"><span>🧥</span></div>
+      <div class="details"><h3>Arc Shell</h3><p class="muted">Technical urban outerwear</p><div class="price">$189</div><button class="small" onclick="showProduct(1)">VIEW OBJECT ↗</button></div>
+    </article>
+    <article class="product">
+      <div class="art a3"><span>🎒</span></div>
+      <div class="details"><h3>Nocturne Carry</h3><p class="muted">Modular everyday bag</p><div class="price">$95</div><button class="small" onclick="showProduct(2)">VIEW OBJECT ↗</button></div>
+    </article>
+    <article class="product">
+      <div class="art a4"><span>🧢</span></div>
+      <div class="details"><h3>Signal Cap</h3><p class="muted">Minimal future headwear</p><div class="price">$45</div><button class="small" onclick="showProduct(3)">VIEW OBJECT ↗</button></div>
+    </article>
+  </div>
+</section>
+
+<section class="banner">
+  <div><h2>YOUR WORLD. YOUR RULES.</h2><p>Sign up for collection updates and future releases.</p></div>
+  <form onsubmit="subscribe(event)" style="display:flex;gap:8px;flex-wrap:wrap">
+    <input id="email" type="email" placeholder="Your email address" required style="padding:13px;border:1px solid #333;border-radius:8px;min-width:180px">
+    <button class="small" style="background:#111;color:white;width:auto">JOIN US ↗</button>
+  </form>
+</section>
+
+<footer><span>© 2026 VANTA FUTURE ATELIER</span><span>DESIGNED FOR WHAT COMES NEXT.</span></footer>
+
+<div class="modal-bg" id="productModal">
+  <div class="modal">
+    <button class="close" onclick="closeModal('productModal')">×</button>
+    <div class="eyebrow">VANTA OBJECT</div>
+    <h2 id="pname"></h2>
+    <p class="muted" id="pdesc"></p>
+    <div class="price" id="pprice"></div>
+    <label for="size">Choose size / option</label>
+    <select id="size"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+    <label for="color">Choose color</label>
+    <select id="color"><option>Obsidian Black</option><option>Arctic White</option><option>Signal Green</option></select>
+    <button class="primary" onclick="addToCart()" style="margin-top:15px">ADD TO BAG +</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="cartModal">
+  <div class="modal">
+    <button class="close" onclick="closeModal('cartModal')">×</button>
+    <div class="eyebrow">YOUR SELECTION</div>
+    <h2>Shopping bag.</h2>
+    <div id="cartItems"></div>
+    <h3 style="margin-top:20px">Subtotal: <span id="total" style="color:var(--accent)">$0</span></h3>
+    <p class="muted" style="margin-top:12px">Demo only. No payment or order is processed.</p>
+    <button class="primary" onclick="alert('This is a demo store. Checkout is not connected to payments.')" style="width:100%">CONTINUE TO CHECKOUT ↗</button>
+  </div>
+</div>
+
+<script>
+const products=[
+{name:"Orbit Runner",desc:"A sculpted sneaker concept built for movement.",price:129},
+{name:"Arc Shell",desc:"Technical outerwear for changing environments.",price:189},
+{name:"Nocturne Carry",desc:"A modular carry concept for everyday essentials.",price:95},
+{name:"Signal Cap",desc:"Minimal headwear with a futuristic attitude.",price:45}
+];
+let selected=0,bag=[];
+function showProduct(i){
+ selected=i;
+ document.getElementById("pname").textContent=products[i].name;
+ document.getElementById("pdesc").textContent=products[i].desc;
+ document.getElementById("pprice").textContent="$"+products[i].price;
+ document.getElementById("productModal").style.display="grid";
+}
+function closeModal(id){document.getElementById(id).style.display="none"}
+function addToCart(){
+ bag.push({...products[selected],size:document.getElementById("size").value,color:document.getElementById("color").value});
+ updateCart();closeModal("productModal");
+}
+function updateCart(){
+ document.getElementById("count").textContent=bag.length;
+ document.getElementById("cartItems").innerHTML=bag.length?bag.map((p,i)=>`<div class="cart-row"><span>${p.name}<br><small>${p.size} · ${p.color}</small></span><span>$${p.price} <button onclick="removeItem(${i})">REMOVE</button></span></div>`).join(""):"<p class='muted' style='padding:20px 0'>Your bag is empty.</p>";
+ document.getElementById("total").textContent="$"+bag.reduce((sum,p)=>sum+p.price,0);
+}
+function removeItem(i){bag.splice(i,1);updateCart()}
+function openCart(){updateCart();document.getElementById("cartModal").style.display="grid"}
+function subscribe(e){e.preventDefault();alert("Thanks for joining the VANTA demo!");e.target.reset()}
+document.querySelectorAll(".modal-bg").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.style.display="none"}));
+</script>
+</body>
+</html>
